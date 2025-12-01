@@ -40,6 +40,7 @@ class RegisterForm(FlaskForm):
         exist_unm=user.query.filter_by(username=unm.data).first()
         if exist_unm:
             raise ValidationError("user name not available")
+            
 
 
 
@@ -76,7 +77,8 @@ def login():
             if bcrypt.check_password_hash(u.password,form.passwd.data):
                 login_user(u)
                 return redirect(url_for('home'))  
-
+    else:
+        raise ValidationError("user name not available")       
 
 
     return render_template('login.html',form=form)

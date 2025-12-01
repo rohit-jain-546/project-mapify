@@ -12,6 +12,9 @@
     <form method="POST" action="">
         {{form.hidden_tag()}}
         {{form.unm}}
+         {% for error in form.unm.errors %}
+            <p style="color:red;">{{ error }}</p>
+        {% endfor %}
         {{form.passwd}}
         {{form.submit}}
     </form>
