@@ -1,17 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}" />
+
+    <!-- Extra Stylesheet -->
+
+
+    <title>Mapify</title>
+    <link rel="stylesheet" href="idk.css" />
 </head>
+
 <body>
-    <h1>hello user</h1>
-    <br>
-    <br>
-    <h4></h4>
-    <a href="{{url_for('login')}}">login</a>
-    <br>
-    <a href="{{url_for('signup')}}">sign-up</a>
+
+    <header class="navbar">
+        <div class="logo">Mapify</div>
+
+        <nav class="nav-links">
+            <div class="dropdown">Products</div>
+            <div class="dropdown">Developers</div>
+            <div class="dropdown">Resources</div>
+            <div class="dropdown">Company</div>
+            <a href="#" class="nav-item">Pricing</a>
+            <a href="#" class="nav-item">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a class="login-btn" href="{{url_for('login')}}">Log in</a>
+            <a href="{{ url_for('signup') }}">
+                <button class="signup-btn">Sign Up</button>
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h1>Find. Click. Explore.</h1>
+        <p>"Your city, mapped smarter."</p>
+
+        <div class="cta-buttons">
+            <a href="{{ url_for('signup') }}">
+                <button class="primary-btn">Get Started for Free</button>
+            </a>
+
+            <button class="secondary-btn">Contact Us</button>
+        </div>
+    </section>
+
 </body>
+
 </html>
