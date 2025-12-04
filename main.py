@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import input_required, length, ValidationError
+from wtforms.validators import input_required, length, ValidationError,Email
 from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
@@ -24,11 +24,17 @@ def load_user(user_id):
 
 class user(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    phno = db.Column(db.String(80), unique=True, nullable=False)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
 
 class RegisterForm(FlaskForm):
+    name = StringField(validators=[input_required(), length(min=4, max=50)], render_kw={'placeholder': 'full name'})
+    email = StringField(validators=[input_required(), Email()], render_kw={'placeholder': 'email'})
+    phno = StringField(validators=[input_required(), length(min=4, max=20)], render_kw={'placeholder': 'phone number'})
     unm = StringField(validators=[input_required(), length(min=4, max=20)], render_kw={'placeholder': 'user name'})
     passwd = PasswordField(validators=[input_required(), length(min=4, max=20)], render_kw={'placeholder': 'password'})
     submit = SubmitField('register')
@@ -79,7 +85,7 @@ def signup():
     form = RegisterForm()
     if form.validate_on_submit():
         has_pass = bcrypt.generate_password_hash(form.passwd.data)
-        new_user = user(username=form.unm.data, password=has_pass)
+        new_user = user(name=form.name.data,email=form.email.data,phno=form.phno.data,username=form.unm.data, password=has_pass)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
