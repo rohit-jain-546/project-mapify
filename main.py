@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, url_for, redirect, request , session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
@@ -54,7 +54,7 @@ class LoginForm(FlaskForm):
 @app.route("/home", methods=['GET', 'POST'])
 @login_required
 def home():
-    return render_template('home.html')
+    return render_template('home.html',name=session['name'])
 
 
 @app.route("/logout", methods=['GET', 'POST'])
@@ -75,6 +75,7 @@ def login():
     if form.validate_on_submit():
         u = user.query.filter_by(username=form.unm.data).first()
         if u and bcrypt.check_password_hash(u.password, form.passwd.data):
+            session['name'] = u.name
             login_user(u)
             return redirect(url_for('home'))
     return render_template('login.html', form=form)
