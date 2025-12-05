@@ -32,9 +32,7 @@
 
 <div id="map"></div>
 
-<!-- --------------------------
-     JINJA VARIABLES (SAFE)
---------------------------- -->
+
 {% if lat and lon %}
     {% set has_location = true %}
     {% set js_lat = lat %}
@@ -52,13 +50,13 @@
 <script>
     mapboxgl.accessToken = 'pk.eyJ1Ijoicm9oaXQtamFpbi01NDYiLCJhIjoiY21pb3E3YXpyMDRxNTNjcjB0OTFhc2o4byJ9._rFpc2KpuSMyhPrdHO9bQQ';
 
-    // Clean JS variables (no Jinja expressions inside JS)
+    
     const latitude = parseFloat("{{ js_lat }}");
     const longitude = parseFloat("{{ js_lon }}");
     const hasLocation = "{{ 'true' if has_location else 'false' }}";
 
 
-    // Load map
+    
     const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v12',
@@ -66,7 +64,7 @@
         zoom: 12
     });
 
-    // Add marker only if user entered lat/lon
+    
     if (hasLocation === "true") {
         new mapboxgl.Marker()
             .setLngLat([longitude, latitude])

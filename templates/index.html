@@ -5,14 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}" />
 
-    <!-- Extra Stylesheet -->
-
-
     <title>Mapify</title>
-    <link rel="stylesheet" href="idk.css" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+
 </head>
 
 <body>
@@ -21,11 +18,8 @@
         <div class="logo">Mapify</div>
 
         <nav class="nav-links">
-            <div class="dropdown">Products</div>
+
             <div class="dropdown">Developers</div>
-            <div class="dropdown">Resources</div>
-            <div class="dropdown">Company</div>
-            <a href="#" class="nav-item">Pricing</a>
             <a href="#" class="nav-item">Contact</a>
         </nav>
 

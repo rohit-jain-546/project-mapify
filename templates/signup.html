@@ -1,35 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sign-up</title>
-</head>
-<body>
-    <h1>sign-up page</h1>
-    <br>
-    <br>
-    <form method="POST" action="">
-        {{form.hidden_tag()}}
-        {{form.name}}
-        <br>
-        <br>
-        {{form.email}}
-        <br>
-        <br>
-        {{form.phno}}
-        <br>
-        <br>
+<html>
 
-        {{form.unm}}
-        <br>
-        <br>
-        {{form.passwd}}
-        <br>
-        <br>
-        {{form.submit}}
-    </form>
-    <h4></h4>
-    <a href="{{url_for('login')}}">login</a>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/s2.css') }}" />
+    <title>Sign up</title>
+</head>
+
+<body>
+    <div class="desktop">
+        <div class="text-wrapper">Mapify</div>
+
+
+        <div class="text-wrapper-7">Create Your Account</div>
+
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+
+            <!-- Full name -->
+            <div class="text-wrapper-21">Full Name</div>
+            <div class="rectangle">
+                {{ form.name(class="input-field", placeholder="Eg. Steve Johanson") }}
+            </div>
+
+            <!-- Username -->
+            <div class="text-wrapper-22">Username</div>
+            <div class="rectangle-2">
+                {{ form.unm(class="input-field", placeholder="Create a Username") }}
+            </div>
+
+            <!-- Email -->
+            <div class="text-wrapper-23">E-mail</div>
+            <div class="rectangle-3">
+                {{ form.email(class="input-field", placeholder="Enter E-mail ID") }}
+            </div>
+
+            <!-- Phone (optional) -->
+
+            <!-- <div class="rectangle-5">
+                {{ form.phno(class="input-field", placeholder="Phone ") }}
+            </div> -->
+
+            <!-- Password -->
+            <div class="text-wrapper-24">Password</div>
+            <div class="rectangle-5">
+                {{ form.passwd(class="input-field", placeholder="Create a Password") }}
+            </div>
+
+            <!-- Submit -->
+            <div class="rectangle-4">
+                {{ form.submit(class="register-btn", value="Register") }}
+            </div>
+
+        </form>
+
+        <!-- FLASK FORM END -->
+
+
+        <!-- <p class="p"></p> -->
+        <div class="text-wrapper-17"><a href="{{ url_for('login') }}">Already have an account ?</a></div>
+
+    </div>
 </body>
+
 </html>
