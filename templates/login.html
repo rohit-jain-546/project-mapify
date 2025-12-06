@@ -3,23 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
+    <title>Mapify Login</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/s3.css')}}" />
 </head>
 <body>
-    <h1>login page</h1>
-    <br>
-    <br>
-    <form method="POST" action="">
+<div class="desktop">
+    <div class="group">
+        <!-- <div class="ellipse"></div> -->
+        <!-- <img class="image" src="path-to-your-logo.png" alt="Mapify logo"> -->
+        <!-- <div class="div"></div> -->
+    </div>
+
+    <div class="text-wrapper">Mapify</div>
+
+    <div class="group-2">
+        <div class="text-wrapper-4">products</div>
+        <img class="polygon" src="path-to-arrow.png" alt="arrow">
+    </div>
+
+    <div class="group-3">
+        <div class="text-wrapper-5">developers</div>
+        <img class="img" src="path-to-arrow.png" alt="arrow">
+    </div>
+
+    <div class="group-wrapper">
+        <div class="group-4">
+            <div class="text-wrapper-6">resources</div>
+            <img class="polygon-2" src="path-to-arrow.png" alt="arrow">
+        </div>
+    </div>
+
+    <div class="group-5">
+        <div class="text-wrapper-6">company</div>
+        <img class="polygon-3" src="path-to-arrow.png" alt="arrow">
+    </div>
+
+    <div class="text-wrapper-2">pricing</div>
+    <div class="text-wrapper-3">contact us</div>
+
+    <div class="text-wrapper-7">Log in</div>
+     <form method="POST" action="">
         {{form.hidden_tag()}}
-        {{form.unm}}
-        <br>
-        <br>
-        {{form.passwd}}
-        <br>
-        <br>
-        {{form.submit}}
-    </form>
-    <h4></h4>
-    <a href="{{url_for('signup')}}">sign-up</a>
+
+
+    <div class="group-6">
+        <div class="text-wrapper-11">Username / E-mail</div>
+        <div class="rectangle">{{ form.unm(class="input-field", placeholder="Enter your email or username") }}</div>
+        <div class="text-wrapper-10"></div>
+    </div>
+
+    <div class="group-8">
+        <div class="text-wrapper-11">Password</div>
+        <div class="rectangle-2">{{ form.passwd(class="input-field", placeholder="Enter password") }}</div>
+        <div class="text-wrapper-13"></div>
+    </div>
+
+    <button class="continue-btn" id="continueButton">Continue</button>
+     </form>
+    <div class="p"> <a href="{{url_for('signup')}}">New to the site ? Sign Up right now !</a>
+</div>
+
+    <!-- <div class="already-have-an">Already have an account?</div> -->
+    <div class="ellipse-2"></div>
+    <div class="ellipse-3"></div>
+</div>
 </body>
 </html>

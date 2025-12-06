@@ -1,67 +1,141 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="">
 
 <head>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <meta charset="utf-8" />
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/s2.css') }}" />
-    <title>Sign up</title>
+
+    <title></title>
+
 </head>
 
 <body>
+
     <div class="desktop">
+
         <div class="text-wrapper">Mapify</div>
 
+        <div class="text-wrapper-2">pricing</div>
+
+        <div class="text-wrapper-3">contact us</div>
+
+        <div class="group-2">
+
+            <div class="text-wrapper-4">products</div>
+
+            <img class="polygon" src="img/polygon-1.svg" />
+
+        </div>
+
+        <div class="group-3">
+
+            <div class="text-wrapper-5">developers</div>
+
+            <img class="img" src="img/polygon-2.svg" />
+
+        </div>
+
+        <div class="group-wrapper">
+
+            <div class="group-4">
+
+                <div class="text-wrapper-6">resources</div>
+
+                <img class="polygon-2" src="img/polygon-3.svg" />
+
+            </div>
+
+        </div>
+
+        <div class="group-5">
+
+            <div class="text-wrapper-6">company</div>
+
+            <img class="polygon-3" src="img/polygon-4.svg" />
+
+        </div>
 
         <div class="text-wrapper-7">Create Your Account</div>
 
+
+
+        <p class="p">I agree with Mapify’s Privacy Terms and condition</p>
+
+        <p class="already-have-an"><a href="{{ url_for('login') }}">Already have an account ?Login</a></p>
+
+        <div class="ellipse-2"></div>
+
+        <div class="ellipse-3"></div>
         <form method="POST" action="">
             {{ form.hidden_tag() }}
+            {{ form.submit(class="continue-btn", value="Continue") }}
 
-            <!-- Full name -->
-            <div class="text-wrapper-21">Full Name</div>
-            <div class="rectangle">
-                {{ form.name(class="input-field", placeholder="Eg. Steve Johanson") }}
+
+            <div class="text-wrapper-9">Username</div>
+
+            <div class="group-6">
+
+                <div class="text-wrapper-10"></div>
+
+                <div class="text-wrapper-11">Full Name</div>
+
+                <div class="rectangle">{{ form.name(class="input-field", placeholder="Eg. Steve Johanson") }}</div>
+
             </div>
 
-            <!-- Username -->
-            <div class="text-wrapper-22">Username</div>
-            <div class="rectangle-2">
-                {{ form.unm(class="input-field", placeholder="Create a Username") }}
+            <div class="group-7">
+
+                <div class="text-wrapper-12"></div>
+
+                <div class="text-wrapper-11">Contact number</div>
+
+                <div class="rectangle"> {{ form.phno(class="input-field", placeholder="Enter Contact number") }}
+</div>
+
             </div>
 
-            <!-- Email -->
-            <div class="text-wrapper-23">E-mail</div>
-            <div class="rectangle-3">
-                {{ form.email(class="input-field", placeholder="Enter E-mail ID") }}
+            <div class="group-8">
+
+                <div class="text-wrapper-13"></div>
+
+                <div class="text-wrapper-11">Username</div>
+
+                <div class="rectangle-2">{{ form.unm(class="input-field", placeholder="Create a Username") }}</div>
+
             </div>
 
-            <!-- Phone (optional) -->
+            <div class="group-9">
 
-            <!-- <div class="rectangle-5">
-                {{ form.phno(class="input-field", placeholder="Phone ") }}
-            </div> -->
+                <div class="text-wrapper-14"></div>
 
-            <!-- Password -->
-            <div class="text-wrapper-24">Password</div>
-            <div class="rectangle-5">
-                {{ form.passwd(class="input-field", placeholder="Create a Password") }}
+                <div class="text-wrapper-11">E-mail</div>
+
+                <div class="rectangle-2">{{ form.email(class="input-field", placeholder="Enter E-mail ID") }}
+</div>
+
             </div>
 
-            <!-- Submit -->
-            <div class="rectangle-4">
-                {{ form.submit(class="register-btn", value="Register") }}
+            <div class="rectangle-3"></div>
+
+            <div class="group-10">
+
+                <div class="text-wrapper-13"></div>
+
+                <div class="text-wrapper-11">Password</div>
+
+                <div class="rectangle-2">{{ form.passwd(class="input-field", placeholder="Create a Password") }}</div>
+
             </div>
 
-        </form>
-
-        <!-- FLASK FORM END -->
-
-
-        <!-- <p class="p"></p> -->
-        <div class="text-wrapper-17"><a href="{{ url_for('login') }}">Already have an account ?</a></div>
+            <div class="rectangle-4"></div>
 
     </div>
+
 </body>
 
 </html>
