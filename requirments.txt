@@ -1,3 +1,5 @@
+pymysql
+gunicorn
 Flask
 Flask-SQLAlchemy
 Flask-Login
