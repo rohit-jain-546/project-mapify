@@ -3,29 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
+    <title>Route Finder</title>
+
+    <!-- Mapbox -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #map {
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        input {
+            padding: 10px;
+            width: 250px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 18px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>You are logged in {{ name }}</h1>
-    <a href="{{url_for('logout')}}">Click here to logout</a>
+<h1>Welcome {{ name }}</h1>
+<h2>Enter Locations to get The Route</h2>
 
-    <hr>
 
-    <h2>Enter Coordinates to View on Map</h2>
+<form method="POST">
+    <input type="text" name="start" placeholder="Start location (e.g., Mumbai)" required>
+    <input type="text" name="end" placeholder="End location (e.g., Pune)" required>
+    <button type="submit">Get Route</button>
+</form>
 
-    <form action="{{ url_for('map_page') }}" method="POST">
-        <label>Latitude:</label>
-        <input type="text" name="lat" placeholder="e.g. 28.7041" required>
+<a href="{{ url_for('logout') }}">Back to Home</a>
 
-        <br><br>
+<div id="map"></div>
 
-        <label>Longitude:</label>
-        <input type="text" name="lon" placeholder="e.g. 77.1025" required>
+<script>
+    mapboxgl.accessToken = "pk.eyJ1Ijoicm9oaXQtamFpbi01NDYiLCJhIjoiY21pb3E3YXpyMDRxNTNjcjB0OTFhc2o4byJ9._rFpc2KpuSMyhPrdHO9bQQ";
 
-        <br><br>
+    // Start and end from Flask (if provided)
+    const startPlace = "{{ request.form.get('start', '') }}";
+    const endPlace = "{{ request.form.get('end', '') }}";
 
-        <button type="submit">Show Map</button>
-    </form>
+    // Initialize Map
+    const map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v12",
+        center: [78.9629, 20.5937], // Center of India
+        zoom: 4
+    });
+
+    async function getCoordinates(place) {
+        if (!place) return null;
+
+        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(place)}.json?access_token=${mapboxgl.accessToken}`;
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.features.length === 0) return null;
+
+        return data.features[0].center; // [lon, lat]
+    }
+
+    // Draw Route
+    async function drawRoute() {
+        if (!startPlace || !endPlace) return;
+
+        const start = await getCoordinates(startPlace);
+        const end = await getCoordinates(endPlace);
+
+        if (!start || !end) {
+            alert("Unable to find one of the locations. Try again.");
+            return;
+        }
+
+        // Add markers
+        new mapboxgl.Marker({ color: "green" }).setLngLat(start).addTo(map);
+        new mapboxgl.Marker({ color: "red" }).setLngLat(end).addTo(map);
+
+        // Directions API
+        const directionsURL = 
+    `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?geometries=geojson&access_token=${mapboxgl.accessToken}`;
+
+
+        const response = await fetch(directionsURL);
+        const json = await response.json();
+
+        const route = json.routes[0].geometry;
+
+        
+        if (map.getSource("route")) {
+            map.removeLayer("route");
+            map.removeSource("route");
+        }
+
+        map.addSource("route", {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": route
+            }
+        });
+
+        map.addLayer({
+            "id": "route",
+            "type": "line",
+            "source": "route",
+            "layout": { "line-join": "round", "line-cap": "round" },
+            "paint": {
+                "line-color": "#0074D9",
+                "line-width": 6
+            }
+        });
+
+        // Auto zoom to route
+        const bounds = new mapboxgl.LngLatBounds();
+        route.coordinates.forEach(coord => bounds.extend(coord));
+        map.fitBounds(bounds, { padding: 40 });
+    }
+
+    drawRoute();
+</script>
 
 </body>
 </html>

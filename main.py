@@ -23,10 +23,10 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    return user.query.get(int(user_id))
+    return User.query.get(int(user_id))
 
 #sql table
-class user(db.Model, UserMixin):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
@@ -45,7 +45,7 @@ class RegisterForm(FlaskForm):
 
 #user name validation
     def validate_unm(self, unm):
-        exist_unm = user.query.filter_by(username=unm.data).first()
+        exist_unm = User.query.filter_by(username=unm.data).first()
         if exist_unm:
             raise ValidationError("user name not available")
 
@@ -75,7 +75,7 @@ def login():
 
 #login verification    
     if form.validate_on_submit():
-        u = user.query.filter_by(username=form.unm.data).first()
+        u = User.query.filter_by(username=form.unm.data).first()
         if u and bcrypt.check_password_hash(u.password, form.passwd.data):
             session['name'] = u.name
             login_user(u)
@@ -89,30 +89,29 @@ def signup():
 #sign up form  same user name or email or phno NOT allowed    
     if form.validate_on_submit():
         has_pass = bcrypt.generate_password_hash(form.passwd.data)
-        new_user = user(name=form.name.data,email=form.email.data,phno=form.phno.data,username=form.unm.data, password=has_pass)
+        new_user = User(name=form.name.data,email=form.email.data,phno=form.phno.data,username=form.unm.data, password=has_pass)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
     return render_template('signup.html', form=form)
 
 #home page
+
 @app.route("/home", methods=['GET', 'POST'])
 @login_required
 def home():
     return render_template('home.html',name=session['name'])
 
-#map page
-@app.route("/map", methods=["GET", "POST"])
-@login_required
-def map_page():
-    lat = None
-    lon = None
+@app.route("/check")
+def check():
+    return f"Logged in? {current_user.is_authenticated}"
+@app.route('/clear')
+def clear():
+    session.clear()
+    logout_user()
+    return "Session cleared"
 
-    if request.method == "POST":
-        lat = request.form.get("lat")
-        lon = request.form.get("lon")
 
-    return render_template("map.html", lat=lat, lon=lon)
 
 app.run(debug=True)
 
