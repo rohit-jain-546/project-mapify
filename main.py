@@ -16,7 +16,7 @@ bcrypt = Bcrypt(app)
 # app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/map"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 
-app.config['SECRET_KEY'] = 'MAPIFY@PTR'
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", "MAPIFY@PTR")
 db = SQLAlchemy(app)
 #map box token
 MAPBOX_TOKEN = os.getenv("MAPBOX_ACCESS_TOKEN")
@@ -121,5 +121,5 @@ if __name__ == "__main__":
 
 
 
-app.run(debug=True)
+
 
