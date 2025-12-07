@@ -5,6 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import input_required, length, ValidationError,Email
 from flask_bcrypt import Bcrypt
+import os
 #flask app set up
 app = Flask(__name__)
 
@@ -12,9 +13,13 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 #sql setup
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/map"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/map"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+
 app.config['SECRET_KEY'] = 'MAPIFY@PTR'
 db = SQLAlchemy(app)
+#map box token
+MAPBOX_TOKEN = os.getenv("MAPBOX_ACCESS_TOKEN")
 
 #login lib set up
 login_manager = LoginManager()
@@ -100,16 +105,19 @@ def signup():
 @app.route("/home", methods=['GET', 'POST'])
 @login_required
 def home():
-    return render_template('home.html',name=session['name'])
+    return render_template('home.html',name=session['name'],mapbox_token=MAPBOX_TOKEN)
 
-@app.route("/check")
-def check():
-    return f"Logged in? {current_user.is_authenticated}"
-@app.route('/clear')
-def clear():
-    session.clear()
-    logout_user()
-    return "Session cleared"
+# @app.route("/check")
+# def check():
+#     return f"Logged in? {current_user.is_authenticated}"
+# @app.route('/clear')
+# def clear():
+#     session.clear()
+#     logout_user()
+#     return "Session cleared"
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
 
 
 

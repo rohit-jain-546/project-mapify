@@ -47,7 +47,7 @@
 <div id="map"></div>
 
 <script>
-    mapboxgl.accessToken = "pk.eyJ1Ijoicm9oaXQtamFpbi01NDYiLCJhIjoiY21pb3E3YXpyMDRxNTNjcjB0OTFhc2o4byJ9._rFpc2KpuSMyhPrdHO9bQQ";
+    mapboxgl.accessToken = "{{ mapbox_token }}";
 
     // Start and end from Flask (if provided)
     const startPlace = "{{ request.form.get('start', '') }}";
